@@ -11,12 +11,6 @@ def check_1(fields,item): # fields is a list of patterns
         for entry in item:
             entry = re.sub("\s","",entry)
             for ff in fields:
-                if ff==fields[2]:
-                    if entry[0:4] == "eyr:":
-                        print(ff)
-                        print(entry)
-                        print(ff.match(entry)!=None)
-                        print("\n")
                 if ff.match(entry)!=None: matches += 1
         if len(fields) == matches: return True
         else: return False
