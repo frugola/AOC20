@@ -3,19 +3,6 @@ from copy import deepcopy
 from interpreter import HandHeld
 from interpreter import load_prog
 
-
-def test_hh():
-    hh = HandHeld()
-    hh.set_prog([["acc",3],["acc",-1]])
-    hh.run()
-    print(hh.state)
-    print(hh.pter)
-
-#test_hh()
-
-
-
-
 def is_loopy(program):
     hh = HandHeld()
     hh.set_prog(program)
@@ -28,10 +15,11 @@ def is_loopy(program):
         elif hh.pter in visited: flag = True
         elif hh.pter == len(program): break
     return flag,hh.state
-        
+
 
 def star_1(program):
     print(is_loopy(program)[1])
+
 
 def star_2(program):
     for idx,cmd in enumerate(program):

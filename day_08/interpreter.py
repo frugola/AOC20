@@ -69,6 +69,15 @@ def load_prog(filename):
     return program
 
 
+def test_hh():
+    hh = HandHeld()
+    hh.set_prog([["acc",3],["acc",-1]])
+    hh.run()
+    print(hh.state)
+    print(hh.pter)
+
+#test_hh()
+
 
 
     
