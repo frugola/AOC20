@@ -54,6 +54,20 @@ class HandHeld:
 
 
 
+def load_prog(filename):
+    program = []
+    in_f = open(filename)
+    for line in in_f:
+        cmd = line[0:3]
+        val = re.findall("\d+",line)[0]
+        if line[4] == "+": 
+            val = int(val)
+        else :
+            val = -int(val)
+        program += [[cmd,val]]
+    in_f.close()
+    return program
+
 
 def test_hh():
     hh = HandHeld()
@@ -66,30 +80,6 @@ def test_hh():
 
 
 
-program = []
-in_f = open("day_08_input")
-for line in in_f:
-    cmd = line[0:3]
-    val = re.findall("\d+",line)[0]
-    if line[4] == "+": 
-        val = int(val)
-    else :
-        val = -int(val)
-    program += [[cmd,val]]
-
-
-def star_1(program):
-    hh = HandHeld()
-    hh.set_prog(program)
-    visited = []
-    while True:
-        if hh.pter not in visited:
-            visited += [hh.pter]
-            hh.step()
-        else:
-            print(hh.state)
-            break
-
 
 def is_loopy(program):
     hh = HandHeld()
@@ -100,30 +90,27 @@ def is_loopy(program):
         if hh.pter not in visited and hh.pter < len(program):
             visited+=[hh.pter]
             hh.step()
-        elif hh.pter in visited:
-            flag = True
-        elif hh.pter == len(program):
-            break
-    return flag
+        elif hh.pter in visited: flag = True
+        elif hh.pter == len(program): break
+    return flag,hh.state
         
+
+def star_1(program):
+    print(is_loopy(program)[1])
 
 def star_2(program):
     for idx,cmd in enumerate(program):
-        pgm = deepcopy(program) # modify this to deep copy
-        if cmd[0]=="nop" : 
-            pgm[idx][0] = "jmp"
-        elif cmd[0]=="jmp" : 
-            pgm[idx][0] = "nop"
+        pgm = deepcopy(program) 
+        if cmd[0]=="nop" : pgm[idx][0] = "jmp"
+        elif cmd[0]=="jmp" : pgm[idx][0] = "nop"
         else : pass
-        if is_loopy(pgm) == False:
+        [flag,state] = is_loopy(pgm)
+        if flag == False: 
+            print(state)
             break
 
-    hh = HandHeld()
-    hh.set_prog(pgm)
-    hh.run()
-    print(hh.state)
-        
 
+program = load_prog("day_08_input")
 
 star_1(program)
 star_2(program)
