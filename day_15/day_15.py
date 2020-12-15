@@ -1,3 +1,5 @@
+import time
+
 nbrs = [19,0,5,1,10,13]
 test = [0,3,6]
 
@@ -35,4 +37,6 @@ def star_2(nbrs,target):
     print(key_list[val_list.index(target-1)])
 
 star_1(nbrs,2020)
+start = time.time()
 star_2(nbrs,30000000)
+print(time.time()-start)
